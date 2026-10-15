@@ -1,1 +1,1 @@
-Url: https://tomiczek-uncertaintycalculator.streamlit.app
+Url: https://kalkulatorniepewnosci.streamlit.app
