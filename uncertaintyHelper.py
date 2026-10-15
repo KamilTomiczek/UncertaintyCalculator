@@ -23,13 +23,13 @@ def uncertaintyTypeA(measurement, confidence_level=0.6826):
 def uncertaintyTypeB(delta_max):
     return delta_max / math.sqrt(3)
 
-def uncertaintyTypeBAnalog(instrument_class, instrument_range):
+def deltaMaxAnalog(instrument_class, instrument_range):
     delta_max = (instrument_class * instrument_range) / 100.0
-    return delta_max / math.sqrt(3)
+    return delta_max
 
-def uncertaintyTypeBDigital(wynik, instrument_class, b_dgt, resolution):
+def deltaMaxDigital(wynik, instrument_class, b_dgt, resolution):
     delta_max = (instrument_class / 100.0) * abs(wynik) + (b_dgt * resolution)
-    return delta_max / math.sqrt(3)
+    return delta_max
 
 def uncertaintyTypeBCounting(N):
     return math.sqrt(N)

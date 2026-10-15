@@ -172,13 +172,12 @@ with tab3:
         dzialka = st.number_input("Najmniejsza działka skali (Δmax):", value=0.05, format="%.4f")
         u_b = uh.uncertaintyTypeB(dzialka)
         st.success(f"**Niepewność $u_B$:** {u_b:.5f}")
-        st.latex(rf"u_B = \frac{{\Delta_{{max}}}}{{\sqrt{{3}}}} = \frac{{{dzialka}}}{{\sqrt{{3}}}} = {u_b:.5f}")
 
     elif typ_p == "Analogowy (wskazówkowy z klasą i zakresem)":
         klasa = st.number_input("Klasa dokładności miernika:", value=2.5, format="%.2f")
         zakres = st.number_input("Zakres pomiarowy miernika:", value=20.0, format="%.2f")
-        u_b = uh.uncertaintyTypeBAnalog(klasa, zakres)
-        delta_max = (klasa * zakres) / 100.0
+        delta_max = uh.deltaMaxAnalog(klasa, zakres)
+        u_b = uh.uncertaintyTypeB(delta_max)
         st.info(f"Maksymalny błąd $\Delta_{{max}} = \\frac{{{klasa} \cdot {zakres}}}{{100}} = {delta_max:.4f}$")
         st.success(f"**Niepewność $u_B$:** {u_b:.5f}")
 
@@ -188,9 +187,9 @@ with tab3:
         b_dgt = st.number_input("Liczba cyfr (b / dgt):", value=2, step=1)
         rozdz = st.number_input("Rozdzielczość (skok ostatniej cyfry):", value=0.01, format="%.4f")
         
-        u_b = uh.uncertaintyTypeBDigital(wynik, klasa_p, b_dgt, rozdz)
-        delta_max = (klasa_p / 100.0) * abs(wynik) + (b_dgt * rozdz)
-        st.info(f"Maksymalny błąd $\Delta_{{max}} = {delta_max:.5f}$")
+        delta_max = uh.deltaMaxDigital(wynik, klasa_p, b_dgt, rozdz)
+        u_b = uh.uncertaintyTypeB(delta_max)
+        st.info(f"Maksymalny błąd $\Delta_{{max}} = \\frac{{{klasa_p}}}{{100}} \cdot {abs(wynik)} + {b_dgt} \cdot {rozdz} = {delta_max:.5f}$")
         st.success(f"**Niepewność $u_B$:** {u_b:.5f}")
 
     elif typ_p == "Zliczający (np. licznik Geigera-Müllera)":
